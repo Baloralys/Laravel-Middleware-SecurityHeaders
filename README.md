@@ -1,4 +1,5 @@
-# Laravel-Middleware-SecurityHeaders (Laravel 5.8.*)
+# Laravel-Middleware-SecurityHeaders
+### (Laravel 5.8.*)
 1. Step
 
 Terminal: using command in Project root Folder
