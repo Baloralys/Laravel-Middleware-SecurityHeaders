@@ -1,9 +1,12 @@
-# Laravel-Middleware-SecurityHeaders
+# Laravel-Middleware-SecurityHeaders (Laravel 5.8.*)
 1. Step
+
+Terminal: using command in Project root Folder
 ```cmd
 php artisan make:middleware SecurityHeaders
 ```
 2. Step
+
 app/Http/Middleware/SecurityHeaders.php
 
 ```php
