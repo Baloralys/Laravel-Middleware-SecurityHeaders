@@ -50,6 +50,7 @@ class SecurityHeaders
 }
 ```
 3. Step
+
 app/Http/Kernel.php adding these line
 ```php
 protected $middleware = [
