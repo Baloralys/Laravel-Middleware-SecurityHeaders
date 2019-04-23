@@ -19,7 +19,11 @@ use Closure;
 
 class SecurityHeaders
 {
-    /**
+// Multiple Domains are separated with one spacer
+// Example: YOUR-DOMAIN-1.XYZ YOUR-DOMAIN-2.XYZ YOUR-DOMAIN-3.XYZ
+    protected $csp = "default-src 'self' YOUR-DOMAIN.XYZ; script-src 'self' YOUR-DOMAIN.XYZ; style-src 'self' YOUR-DOMAIN.XYZ; img-src 'self' YOUR-DOMAIN.XYZ; frame-src YOUR-DOMAIN.XYZ; font-src 'self' YOUR-DOMAIN.XYZ";
+
+    /*
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -41,18 +45,22 @@ class SecurityHeaders
         $response->header("Referrer-Policy","no-referrer-when-downgrade");
 // Content-Security-Policy
         //$response->header('Content-Security-Policy','default-src https: data: "unsafe-inline" "unsafe-eval"');
-        //$response->header('Content-Security-Policy','default-src "self"; script-src "self"');
-        //$response->header('X-Content-Security-Policy','default-src "self"; script-src "self"');
-        //$response->header('X-WebKit-CSP','default-src "self"; script-src "self"');
-        $response->headers->set('Content-Security-Policy', "style-src 'self'");
+        $response->header('Content-Security-Policy',''.$this->csp.'');
+        $response->header('X-Content-Security-Policy',''.$this->csp.'');
+        //$response->header('X-WebKit-CSP',''.$this->csp.'');
 // Feature-Policy
-        $response->header("Feature-Policy","vibrate 'self'; microphone 'none'; payment 'none'; sync-xhr 'self' ".env('APP_URL')."");
-        // Remove X-Powered Header
-        //$response->header('X-Powered-By', 'Whatever you want!');
-        //$response->headers->remove('x-powered-by');
+        $response->header("Feature-Policy","microphone 'none'; payment 'none'; sync-xhr 'self' ".env('APP_URL')."");
+// Expect-CT-Header
+        $response->header('Expect-CT', 'enforce, max-age=21600');
+        // ACAH - Access Control Allow Headers/Origin
+        $response->header("Access-Control-Allow-Origin", url('/'));
+        $response->header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+// Remove Headers
+        $response->headers->remove('x-powered-by');
         return $response;
     }
 }
+
 ```
 3. Step
 
